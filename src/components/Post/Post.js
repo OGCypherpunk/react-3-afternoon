@@ -37,38 +37,47 @@ export default class Post extends Component {
     this.setState({ editing: false });
   }
 
-  // This toggles the drop-down when the three dots in the top right corner of a post are clicked
+   // This toggles the drop-down when the three dots in the top right corner of a post are clicked
   toggleMasterMenu() {
     this.setState({ showMasterMenu: !this.state.showMasterMenu });
   }
 
-  // This hides the drop-down when the post is clicked anywhere
+// This hides the drop-down when the post is clicked anywhere
   hideMasterMenu() {
     if ( this.state.showMasterMenu === true ) {
       this.setState({ showMasterMenu: false });
     }
   }
 
-  render() {
-    // This is destructuring! You can also think of it as being written as so:
-      // const editing = this.state.editing
-      // const showMasterMenu = this.state.showMasterMenu
-    const { editing, showMasterMenu } = this.state;
 
+
+
+
+  render() {
+    console.log(this.props, this.state)
+// This is destructuring! You can also think of it as being written as so:
+// const editing = this.state.editing
+// const showMasterMenu = this.state.showMasterMenu
+    const { editing, showMasterMenu } = this.state;
+    const { text, date } = this.props;
+    
     return (
-      // Main body of post
+// Main body of post
       <section className="Post__parent" onClick={ this.hideMasterMenu }>
 
         {/* Three dots in top right corner */}
         <div className="Post__master-controls">
           <MasterControlIcon onClick={ this.toggleMasterMenu } />
 
-          {/* Drop-down menu. Remember that the "showMasterMenu" variable has been destructured off of this.state */}
-          <div className="Post__master-menu" style={ { display: showMasterMenu ? 'flex' : 'none' } }>
-            <span onClick={ this.showEdit }>Edit</span>
-            <span>Delete</span>
+{/* Drop-down menu. Remember that the "showMasterMenu" variable has been destructured off of this.state */}
+Post__master-menu          <div className="" style={ { display: showMasterMenu ? 'flex' : 'none' } }>
+            <span onClick= { this.showEdit }>Edit</span>
+            <button onClick= { () => this.props.deletePostFn( this.props.id ) }>Delete</button>
           </div>
         </div>
+
+
+
 
         {/* This is where all the meta data of the post will go (who, when, where) */}
         <div className="Post__meta-data">
@@ -79,8 +88,10 @@ export default class Post extends Component {
           <span className="Post__name">DevMountain</span>
           <span className="Post__handle">@DevMountain</span>
 
-          <span className="Post__date">- POST DATE GOES HERE</span>
+          <span className="Post__date">- {this.props.date}</span>
         </div>
+
+
 
         {/* This is where the text goes. Notice the turnary statement. The turnary statement decides to display either the text OR the editor view
             You can also think of it as being written as so:
@@ -95,12 +106,16 @@ export default class Post extends Component {
             // This has been pulled off of this.state via destructuring
             editing
             ?
-              <Edit text=""
-                    hideEdit={ this.hideEdit } />
+              <Edit text= { text }
+                    id={ this.props.id }
+                    hideEdit={ this.hideEdit } 
+                    updatePostFn= { this.props.updatePostFn } />
             :
-              <span className="Post__text">POST TEXT GOES HERE</span>
+              <span className="Post__text">{this.props.text}</span>
           }
         </div>
+
+
 
         {/* These are all of the cute little icons in the bottom left corner */}
         <div className="Post__user-controls">
