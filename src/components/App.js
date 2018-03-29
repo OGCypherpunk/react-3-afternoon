@@ -8,7 +8,7 @@ import Compose from './Compose/Compose';
 class App extends Component {
   constructor(props) {
     super(props);
-
+//state keeps track of all the (____) that we want to (_____)with
     this.state = {
       posts: []
     };
@@ -47,6 +47,11 @@ class App extends Component {
     }).catch(console.log)
   }
 
+
+
+//This is the render method
+
+
   render() {
     
     console.log(this.state)
@@ -55,6 +60,7 @@ class App extends Component {
     const postList = posts.map( post  => {
 // console.log(post)
       return <Post 
+
 //key is a the unique identifier special to React --- "black magic"
                   key = {post.id}
 //These are props
@@ -68,6 +74,7 @@ class App extends Component {
 //what is the difference between key and the others? Why is key speacial?
               /> 
     })
+
 
 // console.log(postList)
 
